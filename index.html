@@ -1,122 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Be My Valentine 💖</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      text-align: center;
-      background: linear-gradient(#ffe6f0, #fff0f5);
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+<style>
+/* --- Body and background --- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  background: linear-gradient(#ffe6f0, #fff0f5);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-    h1 {
-      font-size: 2.2rem;
-      color: #ff4d6d;
-      margin-bottom: 15px;
-    }
+/* --- Headings --- */
+h1 {
+  font-size: 2.2rem;
+  color: #ff4d6d;
+  margin-bottom: 15px;
+  transition: transform 0.5s ease;
+}
 
-    img.gif {
-      width: 150px;
-      max-width: 50vw;
-      margin-bottom: 20px;
-      border-radius: 15px;
-    }
+/* --- GIF --- */
+img.gif {
+  width: 150px;
+  max-width: 50vw;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
 
-    button {
-      font-size: 1.5rem;
-      padding: 15px 30px;
-      margin: 15px;
-      border-radius: 25px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(255,77,109,0.4);
-    }
+/* --- Buttons --- */
+button {
+  font-size: 1.5rem;
+  padding: 15px 30px;
+  margin: 15px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  box-shadow: 0 5px 15px rgba(255,77,109,0.4);
+}
 
-    #yes {
-      background-color: #ff4d6d;
-      color: white;
-    }
+#yes {
+  background-color: #ff4d6d;
+  color: white;
+}
 
-    #no {
-      background-color: #ffccd5;
-      color: #ff4d6d;
-    }
+#no {
+  background-color: #ffccd5;
+  color: #ff4d6d;
+  position: relative;
+}
 
-    .heart {
-      position: absolute;
-      font-size: 1.2rem;
-      animation: floatUp linear infinite;
-      pointer-events: none;
-    }
+/* --- Floating hearts --- */
+.heart {
+  position: absolute;
+  font-size: 1.2rem;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
 
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
-    }
-  </style>
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+
+/* --- Animations for buttons --- */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-5deg);}
+  50% { transform: translateX(5px) rotate(5deg);}
+  75% { transform: translateX(-5px) rotate(-5deg);}
+  100% { transform: translateX(0); }
+}
+</style>
 </head>
 <body>
 
-  <h1>💖 Will you be my Valentine? 💖</h1>
-  <!-- Cute bear GIF -->
-  <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute bear holding heart">
-  
-  <div class="buttons">
-    <button id="yes">Yes 💕</button>
-    <button id="no">No 😢</button>
-  </div>
+<h1>💖 Will you be my Valentine? 💖</h1>
+<img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute bear holding heart">
 
-  <script>
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    let yesSize = 1;
+<div class="buttons">
+  <button id="yes">Yes 💕</button>
+  <button id="no">No 😢</button>
+</div>
 
-    noBtn.addEventListener("click", () => {
-      yesSize += 0.3;
-      yesBtn.style.transform = `scale(${yesSize})`;
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const h1 = document.querySelector("h1");
+let noStage = 0;
 
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 90 + "vw";
-      heart.style.fontSize = (10 + Math.random() * 20) + "px";
-      heart.style.animationDuration = (2 + Math.random() * 2) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    });
+// Array of messages for clicking No
+const noMessages = [
+  "Are you sure??? 🤔",
+  "Are you really sure?? 😳",
+  "Think about it... 💭",
+  "Please stop clicking it! 💕",
+  "You can't say no! 😢",
+  "Come on, say YES! ❤️"
+];
 
-    yesBtn.addEventListener("click", () => {
-      document.body.innerHTML = `
-        <h1>Yay! 💕 You made my day!</h1>
-        <p style="font-size:1.3rem; color:#ff4d6d;">❤️ I love you! ❤️</p>
-        <p style="font-size:1rem; color:#ff6699;">Click anywhere to see floating hearts! 💖</p>
-        <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute bear holding heart">
-      `;
+// Function to create floating hearts
+function spawnHeart(x, y) {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.textContent = "💖";
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+  heart.style.fontSize = (15 + Math.random()*25) + "px";
+  heart.style.animationDuration = (2 + Math.random()*2) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 4000);
+}
 
-      document.body.addEventListener("click", (e) => {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.textContent = "💖";
-        heart.style.left = e.clientX + "px";
-        heart.style.top = e.clientY + "px";
-        heart.style.fontSize = (15 + Math.random() * 25) + "px";
-        heart.style.animationDuration = (2 + Math.random() * 2) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-      });
-    });
+// No button click
+noBtn.addEventListener("click", (e) => {
+  // Shake button
+  noBtn.style.animation = "shake 0.5s";
+  setTimeout(()=>{ noBtn.style.animation=""; }, 500);
 
-  </script>
+  // Show next message
+  if(noStage < noMessages.length){
+    h1.textContent = noMessages[noStage];
+    noStage++;
+  } else {
+    h1.textContent = "😆 You know you want to say YES!";
+  }
+
+  // Spawn hearts randomly
+  spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+
+  // Make Yes button a bit bigger
+  yesBtn.style.transform = `scale(${1 + noStage*0.2})`;
+});
+
+// Yes button click
+yesBtn.addEventListener("click", () => {
+  document.body.innerHTML = `
+    <h1>Yay! 💕 You made my day!</h1>
+    <p style="font-size:1.3rem; color:#ff4d6d;">❤️ I love you! ❤️</p>
+    <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute bear holding heart">
+    <p style="font-size:1rem; color:#ff6699;">Tap anywhere for floating hearts! 💖</p>
+  `;
+  document.body.addEventListener("click", (e) => {
+    spawnHeart(e.clientX, e.clientY);
+  });
+});
+</script>
 </body>
 </html>
