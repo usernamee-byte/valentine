@@ -47,6 +47,7 @@ button {
   cursor: pointer;
   transition: all 0.5s ease;
   box-shadow: 0 5px 15px rgba(255,77,109,0.4);
+  transform: scale(1);
 }
 
 #yes {
@@ -101,12 +102,12 @@ let noStage = 0;
 
 // Array of messages for clicking No
 const noMessages = [
-  "Are you sure??? 🤔",
-  "Are you really sure?? 😳",
-  "Think about it... 💭",
-  "Please stop clicking it! 💕",
-  "You can't say no! 😢",
-  "Come on, say YES! ❤️"
+  "darwmunebuli xar??? 🤔",
+  "martla darwmunebuli xar?? 😳",
+  "ifikre mariam... 💭",
+  "kargad ifikre! 💕",
+  "aras ver metyvi ! 😔",
+  "midi, ki tqvi! ❤️"
 ];
 
 // Function to create floating hearts
@@ -116,8 +117,8 @@ function spawnHeart(x, y) {
   heart.textContent = "💖";
   heart.style.left = x + "px";
   heart.style.top = y + "px";
-  heart.style.fontSize = (15 + Math.random()*25) + "px";
-  heart.style.animationDuration = (2 + Math.random()*2) + "s";
+  heart.style.fontSize = (15 + Math.random() * 25) + "px";
+  heart.style.animationDuration = (2 + Math.random() * 2) + "s";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 4000);
 }
@@ -126,28 +127,38 @@ function spawnHeart(x, y) {
 noBtn.addEventListener("click", (e) => {
   // Shake button
   noBtn.style.animation = "shake 0.5s";
-  setTimeout(()=>{ noBtn.style.animation=""; }, 500);
+  setTimeout(() => { noBtn.style.animation = ""; }, 500);
 
   // Show next message
-  if(noStage < noMessages.length){
+  if (noStage < noMessages.length) {
     h1.textContent = noMessages[noStage];
     noStage++;
   } else {
-    h1.textContent = "😆 You know you want to say YES!";
+    h1.textContent = "😆 Xom vici ro kis tkma ginda??!";
   }
 
   // Spawn hearts randomly
   spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
 
-  // Make Yes button a bit bigger
-  yesBtn.style.transform = `scale(${1 + noStage*0.2})`;
+  // Make Yes button grow
+  yesBtn.style.transform = `scale(${1 + noStage * 0.3})`;
+
+  // Shrink No button gradually
+  const shrinkAmount = 0.2;
+  const currentScale = noBtn.style.transform.replace(/[^0-9.]/g, '') || 1;
+  const newScale = parseFloat(currentScale) - shrinkAmount;
+  if (newScale > 0) {
+    noBtn.style.transform = `scale(${newScale})`;
+  } else {
+    noBtn.style.display = "none"; // hide completely when small
+  }
 });
 
 // Yes button click
 yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
-    <h1>Yay! 💕 You made my day!</h1>
-    <p style="font-size:1.3rem; color:#ff4d6d;">❤️ I love you! ❤️</p>
+    <h1>vaime armjera chemicxovrebaxar💗😍!</h1>
+    <p style="font-size:1.3rem; color:#ff4d6d;">❤️ MIYVARXAR mariam yvelazemetad! ❤️</p>
     <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute bear holding heart">
     <p style="font-size:1rem; color:#ff6699;">Tap anywhere for floating hearts! 💖</p>
   `;
